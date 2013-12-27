@@ -23,17 +23,17 @@ function aceInit()
     editor.getSelectionRange(0);
     $('#ACEditor')[0].style.fontSize='14px';
         
-    editor.setValue(document.f.pageContent.value);
+    editor.setValue(window.pageContent.value);
     editor.gotoLine(0);
     
-    $(document.f).submit(function(){
+    $(window.f).submit(function(){
         if($('#ACEditor').is(':visible')){ 
-            document.f.pageContent.value = editor.getValue();
+            window.f.pageContent.value = editor.getValue();
         }
         this.submit();
     });
     
-    appendModeSelector();
+    //appendModeSelector();
     overrideButtons();
     overrideEditorToggle();
     toggleACEditor( $.cookie('wysiwyg') != 'wysiwyg');

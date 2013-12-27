@@ -1,27 +1,38 @@
 {
+  "manifest_version": 2,
+
   "name": "Fitnesse ACE editor",
   "version": "0.0.1",
   
   "description": "Edit FitNesse test with ACE editor",
+    "background" : {
+        "scripts": ["background.js"]
+    },  
   
-  "background_page": "background.html",
+    "permissions": [ "tabs", "http://*/*", "https://*/*"],
   
-   "permissions": [
-    "http://*/*"
-  ],
-  
-  "page_action": {
-  
-    "default_icon": "icon.png", 
-    "default_title": ""
-  },
+    "page_action": {
+        "default_icon": "ace-icon.png", 
+        "default_title": "Ace Editor",
+        "default_popup": "popup.html"
+    },
   
   "content_scripts": [
         {
-            "matches": ["http://*/*"],
+            "matches": ["http://*/*", "https://*/*" ],
             "css": ["styles/aceditor.css"],
-            "js": [  "lib/jquery.cookie.js", "aceEditorInit.js" ]
+            "js": [  
+                    "lib/jquery-1.7.2.min.js",
+                    "lib/jquery.cookie.js",
+                    "lib/ace-min/ace.js",
+                    
+                    "starter.js",
+                    "aceEditorInit.js"
+                    
+                    
+                ]
         }
     ]
+    
   
 }
