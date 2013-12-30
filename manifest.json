@@ -25,6 +25,8 @@
                     "lib/jquery-1.7.2.min.js",
                     "lib/jquery.cookie.js",
                     "lib/ace-min/ace.js",
+                    "lib/ace-min/mode-sql.js",
+                    "lib/ace-min/mode-powershell.js",
                     
                     "starter.js",
                     "aceEditorInit.js"
