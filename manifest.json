@@ -28,6 +28,10 @@
                     "lib/ace-min/mode-sql.js",
                     "lib/ace-min/mode-powershell.js",
                     
+                    
+                    "lib/SpreadsheetTranslator.js",
+                    "lib/WikiFormatter.js",
+                    
                     "starter.js",
                     "aceEditorInit.js"
                     

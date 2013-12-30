@@ -7,7 +7,7 @@ function aceInit()
     if( $('#pageContent').length == 0 ) return;
     
     $('#editor').append($('<div id="ACEditor"/>'))
-    var editor = window.ACEditor = ace.edit("ACEditor");
+    var editor = window.aceEditor = ace.edit("ACEditor");
     editor.setTheme("ace/theme/textmate");
     var session = editor.getSession();
     
@@ -34,12 +34,16 @@ function aceInit()
     });
     
     //appendModeSelector();
+    $('.editor-toggle').hide();
+    toggleACEditor(true);
     overrideButtons();
-    overrideEditorToggle();
-    toggleACEditor( $.cookie('wysiwyg') != 'wysiwyg');
+    overrideWrapText();
+    //overrideEditorToggle();
+    //toggleACEditor( $.cookie('wysiwyg') != 'wysiwyg');
+    
 }
 function appendModeSelector(){
-    var editor = window.ACEditor;
+    var editor = window.aceEditor;
     var modeSel = $('<fieldset><label id="lmode"> Mode: </label>'
                         +'<select id="mode" size="1">'
                         +'<option value="sql">SQL</option>'
@@ -59,25 +63,29 @@ function appendModeSelector(){
 }
 
 function overrideEditorToggle(){
-    var editor = window.ACEditor;
+    var editor = window.aceEditor;
     $('#editor-textarea-1').click(function(){
-        editor.setValue(document.f.pageContent.value);
+        editor.setValue(window.f.pageContent.value);
         editor.gotoLine(0);
         toggleACEditor(true);
     });
     
     $('#editor-wysiwyg-1').click(function(){
-        document.f.pageContent.value = editor.getValue();
+        window.f.pageContent.value = editor.getValue();
         toggleACEditor(false);
     });
     
     function last2first(handlers){  handlers.splice(0, 0, handlers.pop()); }
     last2first($('#editor-wysiwyg-1').data('events').click);
     
+}
+
+function overrideWrapText(){
     $('#tt-wrap-text').click(function() {
-        window.ACEditor.getSession().setUseWrapMode(this.checked);
+        window.aceEditor.getSession().setUseWrapMode(this.checked);
     });
 }
+
 
 function toggleACEditor(bShow){
     if( bShow ){
@@ -99,7 +107,7 @@ function overrideButtons(){
 function applySelection(editor, format_callable){
     var selected_text = editor.session.getTextRange(editor.getSelectionRange());
     if(selected_text){
-        editor.session.replace(ACEditor.getSelectionRange(), format_callable(selected_text) )
+        editor.session.replace(aceEditor.getSelectionRange(), format_callable(selected_text) )
     }
     else{
         editor.setValue(format_callable(editor.getValue()));
@@ -108,7 +116,7 @@ function applySelection(editor, format_callable){
 
 function FormatWikiACEditor()
 {
-    var editor = window.ACEditor;
+    var editor = window.aceEditor;
     var formatter = new WikiFormatter();
     
     applySelection(editor, function(text){  return formatter.format(text); } )
@@ -116,7 +124,7 @@ function FormatWikiACEditor()
 
 function SelectionSpreadsheetToWikiACEditor()
 {
-    var editor = window.ACEditor;
+    var editor = window.aceEditor;
     var translator = new SpreadsheetTranslator();
   
     applySelection(editor, function(text){  
@@ -127,7 +135,7 @@ function SelectionSpreadsheetToWikiACEditor()
 
 function SelectionWikiToSpreadsheetACEditor()
 {
-    var editor = window.ACEditor;
+    var editor = window.aceEditor;
 
     applySelection(editor, function(text){
         return text.replace(/\r\n/g, '\n')
