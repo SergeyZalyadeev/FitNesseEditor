@@ -6,6 +6,5 @@ if(pageContent && pageContent.tagName === 'TEXTAREA')
     chrome.extension.sendRequest({}, function(response) {
         aceInit();
     });
-    //aceInit();
 }
     

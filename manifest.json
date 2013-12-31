@@ -9,7 +9,7 @@
         "scripts": ["background.js"]
     },  
   
-    "permissions": [ "tabs", "http://*/*", "https://*/*"],
+    "permissions": [ "storage", "tabs", "http://*/*", "https://*/*"],
   
     "page_action": {
         "default_icon": "ace-icon.png", 
@@ -27,14 +27,46 @@
                     "lib/ace-min/ace.js",
                     "lib/ace-min/mode-sql.js",
                     "lib/ace-min/mode-powershell.js",
+                    "lib/ace-min/mode-python.js",
+                    
+                    "lib/ace-min/theme-chrome.js",
+                    "lib/ace-min/theme-chaos.js",
+                    "lib/ace-min/theme-chrome.js",
+                    "lib/ace-min/theme-clouds.js",
+                    "lib/ace-min/theme-clouds_midnight.js",
+                    "lib/ace-min/theme-cobalt.js",
+                    "lib/ace-min/theme-crimson_editor.js",
+                    "lib/ace-min/theme-dawn.js",
+                    "lib/ace-min/theme-dreamweaver.js",
+                    "lib/ace-min/theme-eclipse.js",
+                    "lib/ace-min/theme-github.js",
+                    "lib/ace-min/theme-idle_fingers.js",
+                    "lib/ace-min/theme-kr.js",
+                    "lib/ace-min/theme-merbivore.js",
+                    "lib/ace-min/theme-merbivore_soft.js",
+                    "lib/ace-min/theme-monokai.js",
+                    "lib/ace-min/theme-mono_industrial.js",
+                    "lib/ace-min/theme-pastel_on_dark.js",
+                    "lib/ace-min/theme-solarized_dark.js",
+                    "lib/ace-min/theme-solarized_light.js",
+                    "lib/ace-min/theme-terminal.js",
+                    "lib/ace-min/theme-textmate.js",
+                    "lib/ace-min/theme-tomorrow.js",
+                    "lib/ace-min/theme-tomorrow_night.js",
+                    "lib/ace-min/theme-tomorrow_night_blue.js",
+                    "lib/ace-min/theme-tomorrow_night_bright.js",
+                    "lib/ace-min/theme-tomorrow_night_eighties.js",
+                    "lib/ace-min/theme-twilight.js",
+                    "lib/ace-min/theme-vibrant_ink.js",
+                    "lib/ace-min/theme-xcode.js",
                     
                     
                     "lib/SpreadsheetTranslator.js",
                     "lib/WikiFormatter.js",
                     
                     "starter.js",
+                    "eventListener.js",
                     "aceEditorInit.js"
-                    
                     
                 ]
         }

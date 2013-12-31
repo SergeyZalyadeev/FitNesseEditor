@@ -21,8 +21,9 @@ function aceInit()
     editor.setDisplayIndentGuides(true);
     editor.setHighlightActiveLine(true);
     editor.getSelectionRange(0);
-    $('#ACEditor')[0].style.fontSize='14px';
-        
+    editor.setFontSize('14px');
+    editor.setOption("useIncrementalSearch", true);    
+    
     editor.setValue(window.pageContent.value);
     editor.gotoLine(0);
     
