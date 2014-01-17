@@ -8,21 +8,24 @@ function aceInit()
     
     $('#editor').append($('<div id="ACEditor"/>'))
     var editor = window.aceEditor = ace.edit("ACEditor");
-    editor.setTheme("ace/theme/textmate");
+    
+    var settings = getSettings();
+    editor.setTheme("ace/theme/"+settings.theme);
     var session = editor.getSession();
     
-    var mode = $.cookie("FIT_ACE_MODE") || "sql";
+    var mode = settings.mode;
     
     session.setMode("ace/mode/"+mode);
-    session.setUseSoftTabs(true);
-    session.setUseWrapMode($.cookie('textwrapon') === 'true');
+    session.setUseSoftTabs(settings.soft_tab);
+    session.setUseWrapMode(settings.textwrap);
     
     editor.setShowInvisibles(true);
     editor.setDisplayIndentGuides(true);
     editor.setHighlightActiveLine(true);
     editor.getSelectionRange(0);
-    editor.setFontSize('14px');
-    editor.setOption("useIncrementalSearch", true);    
+    editor.setFontSize(localStorage.fontsize);
+    editor.setOption("useIncrementalSearch", settings.isearch);   
+    editor.setReadOnly(settings.read_only); 
     
     editor.setValue(window.pageContent.value);
     editor.gotoLine(0);
@@ -43,6 +46,29 @@ function aceInit()
     //toggleACEditor( $.cookie('wysiwyg') != 'wysiwyg');
     
 }
+
+function getSettings(){
+    defaults = {
+      mode:'sql',
+      fontsize:'14px',
+      theme: 'textmate',
+      soft_tab:true,
+      isearch:true,
+      read_only:false,
+      textwrap:false  
+    }
+    
+    var settings = localStorage || {};
+    
+    for(var key in defaults){
+      if(settings[key] === undefined){
+        settings.setItem(key, defaults[key]);
+      }
+    }
+    
+    return settings;
+}
+
 function appendModeSelector(){
     var editor = window.aceEditor;
     var modeSel = $('<fieldset><label id="lmode"> Mode: </label>'

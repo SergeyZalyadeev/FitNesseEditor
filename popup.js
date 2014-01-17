@@ -1,14 +1,12 @@
 
 function initMode(){
-    console.log('init mode');
-    var mode = $.cookie("FIT_ACE_MODE") || "sql";
-    console.log('set:'+mode);
-    $('#mode').val(mode)
+    var settings = localStorage || {};
+    for(var key in settings){
+      window[key].value = settings[key];
+    }
     
     $('#mode').change( function(evt){
-        var mode = evt.target.value;
-        $.cookie("FIT_ACE_MODE", mode, { expires: 9999 });
-        sendMessageToContent({mode:mode});
+        sendMessageToContent({mode:evt.target.value});
     });
     
     $('#theme').change(function(evt){
@@ -32,11 +30,11 @@ function sendMessageToContent(message){
 
 
 
-function initialize(){
+function initPopup(){
     console.log('POPUP!!!!!!!!!!!!!!!!!!!!');
     initMode();
 }
 
 
-$(document).ready(initialize);
+$(document).ready(initPopup);
 

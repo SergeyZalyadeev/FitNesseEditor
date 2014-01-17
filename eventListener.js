@@ -9,6 +9,7 @@ chrome.runtime.onMessage.addListener(
             for(var key in msg.message)
             {
                 popupEvents["on_"+key].call(null, msg.message);
+                saveOption(key, msg.message[key]);
             }
         }
     }
@@ -30,4 +31,9 @@ popupEvents.on_fontsize = function(message)
 {
     console.log(message);
     window.aceEditor.setFontSize(message.fontsize);
+}
+
+function saveOption(name, value)
+{
+    localStorage && localStorage.setItem(name, value)
 }
