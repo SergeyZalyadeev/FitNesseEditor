@@ -1,30 +1,39 @@
 
-function initMode(){
-    var settings = localStorage || {};
-    for(var key in settings){
-      window[key].value = settings[key];
-    }
-    
-    $('#mode').change( function(evt){
-        sendMessageToContent({mode:evt.target.value});
-    });
-    
-    $('#theme').change(function(evt){
-        sendMessageToContent({theme:evt.target.value});
-    });
-    
-    $('#fontsize').change(function(evt){
-        sendMessageToContent({fontsize:evt.target.value});
-    });
+function initControls(settings){
+    console.log('initControls');
+    console.log(settings);
+ 
+    $.map(['mode','theme','fontsize'],
+      function(key){ 
+        var e=$('#'+key);
+        e.val(settings[key]); 
+        e.change( function(evt){
+          var msg = {};
+          msg[key]=evt.target.value;
+          sendMessageToContent(msg);
+        });
+    });    
+  
+    $.map(['isearch','read_only','soft_tab','textwrap'],
+      function(key){ 
+        var e=$('#'+key);
+        e.prop('checked', settings[key])
+        e.change( function(evt){
+          var msg = {};
+          msg[key]=evt.target.checked;
+          sendMessageToContent(msg);
+        });
+    });    
+   
 }
 
-function sendMessageToContent(message){
+function sendMessageToContent(message, callback){
     chrome.tabs.query({ active: true, currentWindow: true}
     , function(tabs) {
         chrome.tabs.sendMessage(
                 tabs[0].id
                 , { from: "popup-ace-config", message: message }
-                , function(resp){console.log(resp);} );
+                , callback );
     });
 }
 
@@ -32,7 +41,7 @@ function sendMessageToContent(message){
 
 function initPopup(){
     console.log('POPUP!!!!!!!!!!!!!!!!!!!!');
-    initMode();
+    sendMessageToContent({get_settings:true}, initControls)
 }
 
 

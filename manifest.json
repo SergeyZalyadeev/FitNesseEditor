@@ -59,7 +59,7 @@
                     "lib/ace-min/theme-twilight.js",
                     "lib/ace-min/theme-vibrant_ink.js",
                     "lib/ace-min/theme-xcode.js",
-                    
+                    "lib/ace-min/theme-ambiance.js",
                     
                     "lib/SpreadsheetTranslator.js",
                     "lib/WikiFormatter.js",

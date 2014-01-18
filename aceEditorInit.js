@@ -1,6 +1,8 @@
 function aceInit()
 {
     console.log('aceInit');
+    var settings = getSettings();
+    if(settings.ace_editor_disabled == "true") return;
 
     if(aceInit.DONE) return;
     aceInit.DONE = true;
@@ -9,8 +11,7 @@ function aceInit()
     $('#editor').append($('<div id="ACEditor"/>'))
     var editor = window.aceEditor = ace.edit("ACEditor");
     
-    var settings = getSettings();
-    editor.setTheme("ace/theme/"+settings.theme);
+    editor.setTheme(settings.theme);
     var session = editor.getSession();
     
     var mode = settings.mode;
@@ -37,38 +38,44 @@ function aceInit()
         this.submit();
     });
     
-    //appendModeSelector();
     $('.editor-toggle').hide();
+    $('#tt-wrap-text').hide();
     toggleACEditor(true);
     overrideButtons();
-    overrideWrapText();
-    //overrideEditorToggle();
-    //toggleACEditor( $.cookie('wysiwyg') != 'wysiwyg');
     
 }
 
+function getLocalStorageValue(key, defaultVal)
+{
+    var val = localStorage[key];
+    if(val !== undefined)
+    {
+      return val.match(/true|false/) ? val === "true" : val;
+    }
+    
+    return defaultVal;
+}
+
 function getSettings(){
-    defaults = {
+    var settings = {
       mode:'sql',
       fontsize:'14px',
       theme: 'textmate',
       soft_tab:true,
       isearch:true,
       read_only:false,
-      textwrap:false  
+      textwrap:false,
+      ace_editor_disabled:false
     }
-    
-    var settings = localStorage || {};
-    
-    for(var key in defaults){
-      if(settings[key] === undefined){
-        settings.setItem(key, defaults[key]);
-      }
-    }
+   
+    $.map(settings, function(value, key){
+      settings[key] = getLocalStorageValue(key, value) ;
+    });
     
     return settings;
 }
 
+/*
 function appendModeSelector(){
     var editor = window.aceEditor;
     var modeSel = $('<fieldset><label id="lmode"> Mode: </label>'
@@ -89,6 +96,7 @@ function appendModeSelector(){
     
 }
 
+
 function overrideEditorToggle(){
     var editor = window.aceEditor;
     $('#editor-textarea-1').click(function(){
@@ -106,13 +114,7 @@ function overrideEditorToggle(){
     last2first($('#editor-wysiwyg-1').data('events').click);
     
 }
-
-function overrideWrapText(){
-    $('#tt-wrap-text').click(function() {
-        window.aceEditor.getSession().setUseWrapMode(this.checked);
-    });
-}
-
+*/
 
 function toggleACEditor(bShow){
     if( bShow ){
@@ -124,6 +126,7 @@ function toggleACEditor(bShow){
         $('#wysiwyg').show()
     }
 }
+
 
 function overrideButtons(){
     $('input[value="Spreadsheet to FitNesse"]').click(SelectionSpreadsheetToWikiACEditor)
@@ -174,4 +177,3 @@ function SelectionWikiToSpreadsheetACEditor()
 
 
 
-//$(document).ready(aceInit)
