@@ -3,9 +3,9 @@ function aceInit()
     console.log('aceInit');
     var settings = getSettings();
     if(settings.ace_editor_disabled == "true") return;
-
-    if(aceInit.DONE) return;
-    aceInit.DONE = true;
+    
+    if( $('#ACEditor').length !== 0 ) return;
+    if(window.aceEditor !== undefined ) return;
     if( $('#pageContent').length == 0 ) return;
     
     $('#editor').append($('<div id="ACEditor"/>'))
@@ -24,7 +24,7 @@ function aceInit()
     editor.setDisplayIndentGuides(true);
     editor.setHighlightActiveLine(true);
     editor.getSelectionRange(0);
-    editor.setFontSize(localStorage.fontsize);
+    editor.setFontSize(settings.fontsize);
     editor.setOption("useIncrementalSearch", settings.isearch);   
     editor.setReadOnly(settings.read_only); 
     
@@ -58,9 +58,9 @@ function getLocalStorageValue(key, defaultVal)
 
 function getSettings(){
     var settings = {
-      mode:'sql',
+      mode:'powershell',
       fontsize:'14px',
-      theme: 'textmate',
+      theme: 'ace/theme/cobalt',
       soft_tab:true,
       isearch:true,
       read_only:false,

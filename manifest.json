@@ -60,6 +60,9 @@
                     "lib/ace-min/theme-vibrant_ink.js",
                     "lib/ace-min/theme-xcode.js",
                     "lib/ace-min/theme-ambiance.js",
+
+                    "lib/ace-min/ext-searchbox.js",
+                                    
                     
                     "lib/SpreadsheetTranslator.js",
                     "lib/WikiFormatter.js",
